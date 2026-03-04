@@ -10,6 +10,7 @@ import Industries from './sections/Industries'
 import WorkProcess from './sections/WorkProcess'
 import RecentProjects from './sections/RecentProjects'
 import ContactUs from './pages/ContactUs'
+import NotFound from './pages/NotFound'
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             }
           />
           <Route path="/contact" element={<ContactUs />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />
