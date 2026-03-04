@@ -1,41 +1,32 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
-/**
- * Counts from 0 to `target` over `duration` ms using easeOutQuad.
- * Starts counting when `shouldStart` is true.
- */
-export function useCountUp(target, duration = 2000, shouldStart = false, delay = 0) {
-  const [count, setCount] = useState(0);
+export function useCountUp(target, options = {}) {
+  const { duration = 2000, start = false } = options
+  const [value, setValue] = useState(0)
 
   useEffect(() => {
-    if (!shouldStart) return;
+    if (!start) return
 
-    let startTime = null;
-    let rafId;
+    let frameId
+    const startTime = performance.now()
 
-    const timer = setTimeout(() => {
-      const step = (timestamp) => {
-        if (!startTime) startTime = timestamp;
-        const elapsed = timestamp - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        // easeOutQuad: same curve as original
-        const eased = 1 - (1 - progress) * (1 - progress);
-        setCount(Math.floor(eased * target));
+    const animate = (now) => {
+      const elapsed = now - startTime
+      const progress = Math.min(elapsed / duration, 1)
+      const eased = 1 - Math.pow(1 - progress, 3) // ease-out-cubic
+      const next = Math.round(target * eased)
+      setValue(next)
 
-        if (progress < 1) {
-          rafId = requestAnimationFrame(step);
-        } else {
-          setCount(target);
-        }
-      };
-      rafId = requestAnimationFrame(step);
-    }, delay);
+      if (progress < 1) {
+        frameId = requestAnimationFrame(animate)
+      }
+    }
 
-    return () => {
-      clearTimeout(timer);
-      cancelAnimationFrame(rafId);
-    };
-  }, [shouldStart, target, duration, delay]);
+    frameId = requestAnimationFrame(animate)
 
-  return count;
+    return () => cancelAnimationFrame(frameId)
+  }, [target, duration, start])
+
+  return value
 }
+

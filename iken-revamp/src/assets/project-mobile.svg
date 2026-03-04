@@ -1,0 +1,26 @@
+<svg width="640" height="400" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="mobile-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#020617" />
+      <stop offset="1" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="mobile-accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#38bdf8" />
+      <stop offset="1" stop-color="#0ea5e9" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="400" fill="url(#mobile-bg)" />
+  <circle cx="520" cy="88" r="52" fill="#020617" />
+  <circle cx="520" cy="88" r="40" fill="url(#mobile-accent)" opacity="0.75" />
+  <rect x="184" y="48" width="192" height="304" rx="32" fill="#020617" />
+  <rect x="204" y="76" width="152" height="248" rx="20" fill="#020617" stroke="#1e293b" />
+  <rect x="232" y="104" width="96" height="10" rx="5" fill="#1e293b" />
+  <rect x="232" y="126" width="80" height="10" rx="5" fill="#1e293b" />
+  <rect x="232" y="148" width="104" height="10" rx="5" fill="#1e293b" />
+  <rect x="232" y="190" width="104" height="56" rx="14" fill="#0b1120" />
+  <rect x="232" y="262" width="72" height="10" rx="5" fill="#0369a1" />
+  <rect x="248" y="298" width="56" height="10" rx="5" fill="#1e293b" />
+  <circle cx="280" cy="64" r="6" fill="#1e293b" />
+  <circle cx="280" cy="342" r="10" fill="#1e293b" />
+</svg>
+

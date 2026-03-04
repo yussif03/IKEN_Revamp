@@ -1,43 +1,44 @@
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import Hero from './sections/Hero';
-import Services from './sections/Services';
-import Statistics from './sections/Statistics';
-import Testimonials from './sections/Testimonials';
-import About from './sections/About';
-import Industries from './sections/Industries';
-import WorkProcess from './sections/WorkProcess';
-import RecentProjects from './sections/RecentProjects';
-import CTA from './sections/CTA';
-import TrustedClients from './sections/TrustedClients';
+import { Routes, Route } from 'react-router-dom'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
+import Hero from './sections/Hero'
+import Services from './sections/Services'
+import Statistics from './sections/Statistics'
+import Testimonials from './sections/Testimonials'
+import About from './sections/About'
+import Industries from './sections/Industries'
+import WorkProcess from './sections/WorkProcess'
+import RecentProjects from './sections/RecentProjects'
+import ContactUs from './pages/ContactUs'
 
-export default function App() {
+function App() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white text-slate-900">
       <Navbar />
       <main>
-        {/* 1. Hero */}
-        <Hero />
-        {/* 2. Featured Services */}
-        <Services />
-        {/* 3. Statistics — EXACT values: 20+, 10+, 6+, 50+ */}
-        <Statistics />
-        {/* 4. Customer Says — EXACT testimonial images */}
-        <Testimonials />
-        {/* 5. About */}
-        <About />
-        {/* 6. Industries */}
-        <Industries />
-        {/* 7. Work Process */}
-        <WorkProcess />
-        {/* 8. Recent Projects */}
-        <RecentProjects />
-        {/* 9. CTA Banner */}
-        <CTA />
-        {/* 10. Trusted Clients */}
-        <TrustedClients />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Hero />
+                <Services />
+                <Statistics />
+                <Testimonials />
+                <About />
+                <Industries />
+                <WorkProcess />
+                <RecentProjects />
+              </>
+            }
+          />
+          <Route path="/contact" element={<ContactUs />} />
+        </Routes>
       </main>
       <Footer />
     </div>
-  );
+  )
 }
+
+export default App
+
