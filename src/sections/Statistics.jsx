@@ -40,7 +40,7 @@ const Statistics = () => {
       <div ref={ref} className="space-y-8">
         <div className="max-w-xl mx-auto text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-700">
-            By the numbers
+            Statistics
           </p>
           <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
             A focused team with a track record of shipping.
