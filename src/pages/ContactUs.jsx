@@ -63,8 +63,22 @@ const ContactUs = () => {
                 </div>
                 <div>
                   <p className="font-semibold">Phone Number &amp; Email</p>
-                  <p className="mt-0.5 text-sm text-sky-200">(+20) 105 0500017</p>
-                  <p className="text-sm text-sky-200">contact@iken.tech</p>
+                  <a
+                    href="https://wa.me/201050500017"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Chat with IKEN on WhatsApp"
+                    className="mt-0.5 block w-fit text-sm text-sky-200 transition-opacity duration-300 hover:opacity-80"
+                  >
+                    (+20) 105 0500017
+                  </a>
+                  <a
+                    href="mailto:contact@iken.tech?subject=Inquiry from IKEN Website"
+                    aria-label="Send an email to IKEN"
+                    className="block w-fit text-sm text-sky-200 transition-opacity duration-300 hover:opacity-80"
+                  >
+                    contact@iken.tech
+                  </a>
                 </div>
               </div>
 

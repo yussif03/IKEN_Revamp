@@ -1,5 +1,22 @@
-import { Linkedin, Twitter, Facebook, Instagram } from 'lucide-react'
+import { Linkedin, Twitter, Facebook, Instagram, MessageCircle } from 'lucide-react'
 import SectionWrapper from './SectionWrapper'
+
+const WhatsappIcon = ({ size = 24, strokeWidth = 1.75, ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={strokeWidth}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+  </svg>
+)
 
 const socialLinks = [
   {
@@ -25,6 +42,12 @@ const socialLinks = [
     label: 'Instagram',
     icon: Instagram,
     href: 'https://www.instagram.com/iken.tech',
+  },
+  {
+    id: 'whatsapp',
+    label: 'WhatsApp',
+    icon: WhatsappIcon,
+    href: 'https://wa.me/201050500017',
   },
 ]
 
@@ -76,7 +99,7 @@ const Footer = () => {
           </div>
           <div className="space-y-3">
             <p className="font-semibold text-slate-100">Connect</p>
-            <div className="flex gap-3">
+            <div className="flex gap-3 items-center">
               {socialLinks.map(({ id, label, icon: Icon, href }) => (
                 <a
                   key={id}

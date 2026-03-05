@@ -1,139 +1,213 @@
-import { useState } from 'react'
-import SectionWrapper from '../components/SectionWrapper'
-import { useIntersectionObserver } from '../hooks/useIntersectionObserver'
+import { useState, useEffect, useCallback, useRef } from 'react'
+import './CustomerSays.css'
+
+import person1 from '../assets/person_1-min.jpg'
+import person2 from '../assets/person_2-min.jpg'
+import person3 from '../assets/person_3-min.jpg'
 
 const testimonials = [
   {
-    name: 'Technology Leader',
-    role: 'Enterprise Client',
+    image: person1,
+    name: 'Waleed Kamel',
+    role: 'Managing Director – ContactCars.com',
     quote:
-      'IKEN Technology quickly understood our environment and delivered a platform that has become the backbone of our operations.',
+      '\u201cWe have collaborated with IKEN for a decade as a third-party software provider, during which time we have successfully executed numerous projects across various technology platforms and business domains. The company fosters professionalism and unwavering support as its core values.\u201d',
   },
   {
-    name: 'Product Owner',
-    role: 'SaaS Company',
+    image: person2,
+    name: 'Youssef Abdelrahman',
+    role: 'Corporate Senior Project Manager – EFG Hermes',
     quote:
-      'Their team integrated seamlessly with ours, helping us ship faster while keeping quality and reliability high.',
+      '\u201cWe have had the pleasure of utilizing the conference system developed by IKEN Technology for several years now, & it has been an absolute game-changer for our organization. This system has seamlessly facilitated our communication needs, enabling us to conduct meetings, webinars, and conferences with unparalleled ease & efficiency.\u201d',
   },
   {
-    name: 'Operations Director',
-    role: 'Regional Business',
+    image: person3,
+    name: 'Mohammed Assem',
+    role: 'CTO & Co-founder – Balad',
     quote:
-      'We value IKEN as a long‑term partner for both new initiatives and modernization of existing systems.',
-  },
-  {
-    name: 'CTO',
-    role: 'Fintech Startup',
-    quote:
-      'From architecture to delivery, the collaboration was transparent and focused on business outcomes.',
+      '\u201cIKEN Technology has truly exceeded our expectations. Their customized software solutions have not only streamlined our operations but also provided a significant boost in productivity. The team\'s responsiveness and commitment to delivering high-quality products have made our collaboration seamless. We highly recommend IKEN Technology for anyone seeking reliable and innovative software solutions.\u201d',
   },
 ]
 
 const Stars = () => (
-  <div className="flex gap-1">
-    {Array.from({ length: 5 }).map((_, index) => (
-      <span key={index} className="text-xs text-amber-400">
-        ★
-      </span>
-    ))}
+  <div className="rate">
+    <span className="icon-star text-warning"></span>
+    <span className="icon-star text-warning"></span>
+    <span className="icon-star text-warning"></span>
+    <span className="icon-star text-warning"></span>
+    <span className="icon-star text-warning"></span>
   </div>
 )
 
 const Testimonials = () => {
-  const [activeIndex, setActiveIndex] = useState(0)
-  const { ref, isInView } = useIntersectionObserver()
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [itemsPerView, setItemsPerView] = useState(3)
+  const autoplayRef = useRef(null)
 
-  const handlePrev = () => {
-    setActiveIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))
-  }
+  // Responsive breakpoints matching requested config:
+  // 0: items 1, 768: items 1, 1024: items 2
+  const updateItemsPerView = useCallback(() => {
+    const width = window.innerWidth
+    if (width >= 1024) {
+      setItemsPerView(2)
+    } else {
+      setItemsPerView(1)
+    }
+  }, [])
 
-  const handleNext = () => {
-    setActiveIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))
-  }
+  useEffect(() => {
+    updateItemsPerView()
+    window.addEventListener('resize', updateItemsPerView)
+    return () => window.removeEventListener('resize', updateItemsPerView)
+  }, [updateItemsPerView])
+
+  // Reset index when items per view changes
+  useEffect(() => {
+    setCurrentIndex(0)
+  }, [itemsPerView])
+
+  const maxIndex = Math.max(0, testimonials.length - itemsPerView)
+
+  const handlePrev = useCallback(() => {
+    setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1))
+  }, [maxIndex])
+
+  const handleNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1))
+  }, [maxIndex])
+
+  // Autoplay matching original speed: 700ms transition
+  useEffect(() => {
+    autoplayRef.current = setInterval(() => {
+      setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1))
+    }, 5000)
+
+    return () => {
+      if (autoplayRef.current) {
+        clearInterval(autoplayRef.current)
+      }
+    }
+  }, [maxIndex])
+
+  // Calculate the percentage width per item and translation
+  const itemWidthPercent = 100 / itemsPerView
+  const gutter = 50 // matches original gutter: 50
+  const translateX =
+    currentIndex * (itemWidthPercent) + '%'
 
   return (
-    <SectionWrapper id="testimonials" className="bg-slate-50">
-      <div ref={ref} className="space-y-8">
-        <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-sky-700">
+    <div className="section sec-testimonials" id="testimonials">
+      <div className="container">
+        <div className="row mb-5 align-items-center">
+          <div className="col-md-6">
+            <h2 className="font-weight-bold heading header-Text mb-4 mb-md-0">
               Customer Says
-            </p>
-            <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
-              Teams that trust IKEN Technology.
             </h2>
-            <p className="mt-4 max-w-xl text-sm text-slate-600 md:text-base">
-              Long‑term partnerships with organizations that rely on us to design, build, and
-              maintain critical software assets.
-            </p>
           </div>
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={handlePrev}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 bg-white text-xs font-semibold text-slate-700 transition-colors duration-400 ease-in-out hover:border-sky-500 hover:text-sky-700"
-            >
-              ‹
-            </button>
-            <button
-              type="button"
-              onClick={handleNext}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 bg-white text-xs font-semibold text-slate-700 transition-colors duration-400 ease-in-out hover:border-sky-500 hover:text-sky-700"
-            >
-              ›
-            </button>
+          <div className="col-md-6 text-md-end">
+            <div id="testimonial-nav">
+              <span
+                className="prev"
+                data-controls="prev"
+                onClick={handlePrev}
+                role="button"
+                tabIndex={-1}
+              >
+                Prev
+              </span>
+
+              <span
+                className="next"
+                data-controls="next"
+                onClick={handleNext}
+                role="button"
+                tabIndex={-1}
+              >
+                Next
+              </span>
+            </div>
           </div>
         </div>
 
-        <div className="overflow-hidden">
+        <div className="row">
+          <div className="col-lg-4"></div>
+        </div>
+        <div className="testimonial-slider-wrap">
           <div
-            className="flex gap-6 transition-transform duration-500 ease-in-out"
-            style={{
-              transform: `translateX(-${activeIndex * 100}%)`,
-            }}
+            className="tns-ovh"
+            style={{ overflow: 'hidden' }}
           >
-            {testimonials.map((item, index) => (
-              <div
-                key={item.name}
-                className="min-w-full md:min-w-[50%] lg:min-w-[33.3333%]"
-              >
-                <article
-                  className={`flex h-full flex-col rounded-2xl border border-slate-100 bg-white/80 p-6 shadow-sm transition-all duration-500 ease-in-out hover:-translate-y-1 hover:shadow-lg ${
-                    isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                  }`}
-                  style={{ transitionDelay: `${100 + index * 80}ms` }}
+            <div
+              className="testimonial-slider-inner"
+              style={{
+                display: 'flex',
+                transition: 'transform 700ms ease',
+                transform: `translateX(-${translateX})`,
+              }}
+            >
+              {testimonials.map((item) => (
+                <div
+                  className="item"
+                  key={item.name}
+                  style={{
+                    flex: `0 0 ${itemWidthPercent}%`,
+                    maxWidth: `${itemWidthPercent}%`,
+                    paddingLeft: `${gutter / 2}px`,
+                    paddingRight: `${gutter / 2}px`,
+                    boxSizing: 'border-box',
+                  }}
                 >
-                  <Stars />
-                  <p className="mt-4 text-sm text-slate-700">“{item.quote}”</p>
-                  <div className="mt-5 flex items-center justify-between gap-4">
-                    <div>
-                      <p className="text-sm font-semibold text-slate-900">{item.name}</p>
-                      <p className="text-xs text-slate-500">{item.role}</p>
-                    </div>
+                  <div className="testimonial">
+                    <img
+                      src={item.image}
+                      alt="Image"
+                      className="img-fluid rounded-circle w-25 mb-4"
+                    />
+                    <Stars />
+                    <h3 className="h5 text-primary mb-4 header-Text">
+                      {item.name}
+                    </h3>
+                    <blockquote>
+                      <p>{item.quote}</p>
+                    </blockquote>
+                    <p className="text-black-50">{item.role}</p>
                   </div>
-                </article>
-              </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Navigation dots */}
+          <div className="tns-nav" style={{
+            position: 'absolute',
+            bottom: '-50px',
+            zIndex: 2,
+            left: '50%',
+            transform: 'translateX(-50%)',
+          }}>
+            {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+              <button
+                key={index}
+                className={index === currentIndex ? 'tns-nav-active' : ''}
+                onClick={() => setCurrentIndex(index)}
+                aria-label={`Go to slide ${index + 1}`}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  display: 'inline-block',
+                  margin: '2px',
+                  height: '15px',
+                  width: '15px',
+                  position: 'relative',
+                  cursor: 'pointer',
+                }}
+              />
             ))}
           </div>
         </div>
-
-        <div className="mt-2 flex justify-center gap-2">
-          {testimonials.map((_, index) => (
-            <button
-              key={index}
-              type="button"
-              onClick={() => setActiveIndex(index)}
-              className={`h-1.5 rounded-full transition-all duration-400 ease-in-out ${
-                index === activeIndex ? 'w-5 bg-sky-600' : 'w-2 bg-slate-300'
-              }`}
-              aria-label={`Go to testimonial ${index + 1}`}
-            />
-          ))}
-        </div>
       </div>
-    </SectionWrapper>
+    </div>
   )
 }
 
 export default Testimonials
-
