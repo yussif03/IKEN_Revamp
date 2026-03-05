@@ -212,7 +212,7 @@
 /* --- .testimonial blockquote --- */
 .sec-testimonials .testimonial blockquote {
   font-style: normal;
-  font-size: 18px;
+  font-size: 16px;
   color: #000;
 }
 
@@ -405,11 +405,11 @@
 }
 
 .sec-testimonials .h5 {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
 }
 
 .sec-testimonials .text-primary {
-  color: #0d6efd !important;
+  color: #0369A1 !important;
 }
 
 .sec-testimonials .text-warning {

@@ -162,6 +162,7 @@ const Testimonials = () => {
                       src={item.image}
                       alt="Image"
                       className="img-fluid rounded-circle w-25 mb-4"
+                      style={{ aspectRatio: '1/1', objectFit: 'cover' }}
                     />
                     <Stars />
                     <h3 className="h5 text-primary mb-4 header-Text">
