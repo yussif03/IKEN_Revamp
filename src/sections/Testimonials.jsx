@@ -100,7 +100,7 @@ const Testimonials = () => {
       <div className="container">
         <div className="row mb-5 align-items-center">
           <div className="col-md-6">
-            <h2 className="font-weight-bold heading header-Text mb-4 mb-md-0">
+            <h2 className="inline-block rounded-full bg-sky-100/50 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-sky-700 mb-4 transition-all duration-700 ease-out">
               Customer Says
             </h2>
           </div>

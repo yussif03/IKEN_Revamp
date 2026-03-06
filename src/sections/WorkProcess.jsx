@@ -35,7 +35,7 @@ const WorkProcess = () => {
         {/* Centered Header Section */}
         <div className="mx-auto max-w-2xl text-center">
           <p 
-            className={`text-xs font-semibold uppercase tracking-[0.2em] text-sky-700 ${
+            className={`inline-block rounded-full bg-sky-100/50 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-sky-700 mb-4 transition-all duration-700 ease-out ${
               isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
