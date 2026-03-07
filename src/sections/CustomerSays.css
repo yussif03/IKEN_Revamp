@@ -190,21 +190,6 @@
   font-size: 14px;
 }
 
-/* --- headings inside section --- */
-.sec-testimonials h1,
-.sec-testimonials .h1,
-.sec-testimonials h2,
-.sec-testimonials .h2,
-.sec-testimonials h3,
-.sec-testimonials .h3,
-.sec-testimonials h4,
-.sec-testimonials .h4,
-.sec-testimonials h5,
-.sec-testimonials .h5 {
-  font-family: "Work Sans", sans-serif;
-  color: #00204a;
-}
-
 .sec-testimonials .heading {
   font-weight: 500;
 }
