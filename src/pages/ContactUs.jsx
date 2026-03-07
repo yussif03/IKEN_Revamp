@@ -1,5 +1,6 @@
 import { Phone, MapPin, Clock, ArrowRight } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
+import emailjs from '@emailjs/browser'
 
 const subjects = [
   'General Inquiry',
@@ -11,12 +12,14 @@ const subjects = [
 ]
 
 const ContactUs = () => {
+  const formRef = useRef()
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     subject: '',
     message: '',
   })
+  const [status, setStatus] = useState('idle') // 'idle' | 'loading' | 'success' | 'error'
 
   const handleChange = (e) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -24,8 +27,28 @@ const ContactUs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // TODO: wire up form submission
-    console.log('Form submitted:', formData)
+    setStatus('loading')
+
+    const serviceId = 'service_ocpfe3j'
+    const templateId = 'template_2ki8571'
+    const publicKey = 'a9YRMXYvExEl2KypK'
+
+    emailjs
+      .sendForm(serviceId, templateId, formRef.current, {
+        publicKey: publicKey,
+      })
+      .then(
+        () => {
+          setStatus('success')
+          setFormData({ name: '', phone: '', subject: '', message: '' })
+          setTimeout(() => setStatus('idle'), 5000)
+        },
+        (error) => {
+          console.error('Email sending failed:', error.text)
+          setStatus('error')
+          setTimeout(() => setStatus('idle'), 5000)
+        }
+      )
   }
 
   return (
@@ -73,11 +96,11 @@ const ContactUs = () => {
                     (+20) 105 0500017
                   </a>
                   <a
-                    href="mailto:contact@iken.tech?subject=Inquiry from IKEN Website"
+                    href="mailto:yussifmoh.dev@gmail.com?subject=Inquiry from IKEN Website"
                     aria-label="Send an email to IKEN"
                     className="block w-fit text-sm text-sky-200 transition-opacity duration-300 hover:opacity-80"
                   >
-                    contact@iken.tech
+                    yussifmoh.dev@gmail.com
                   </a>
                 </div>
               </div>
@@ -123,7 +146,7 @@ const ContactUs = () => {
             <h2 className="text-xl font-bold text-slate-900">Leave a Message</h2>
             <p className="mt-1 text-sm text-slate-500">We're Ready To Help You</p>
 
-            <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+            <form ref={formRef} onSubmit={handleSubmit} className="mt-6 space-y-4">
               {/* Name + Phone */}
               <div className="flex flex-col gap-4 sm:flex-row">
                 <input
@@ -189,11 +212,23 @@ const ContactUs = () => {
                 <button
                   id="contact-submit-btn"
                   type="submit"
-                  className="inline-flex items-center gap-2 rounded-full bg-sky-900 px-7 py-3 text-sm font-semibold text-white transition-colors duration-300 hover:bg-sky-800"
+                  disabled={status === 'loading'}
+                  className="inline-flex items-center gap-2 rounded-full bg-sky-900 px-7 py-3 text-sm font-semibold text-white transition-colors duration-300 hover:bg-sky-800 disabled:opacity-70"
                 >
-                  Submit Message
-                  <ArrowRight size={16} />
+                  {status === 'loading' ? 'Sending...' : 'Submit Message'}
+                  {status !== 'loading' && <ArrowRight size={16} />}
                 </button>
+                
+                {status === 'success' && (
+                  <p className="mt-3 text-sm text-green-600">
+                    Your message has been sent successfully! We will get back to you soon.
+                  </p>
+                )}
+                {status === 'error' && (
+                  <p className="mt-3 text-sm text-red-600">
+                    Something went wrong. Please try again later.
+                  </p>
+                )}
               </div>
             </form>
           </div>
