@@ -56,7 +56,7 @@ const ContactUs = () => {
       <div className="container">
         {/* ── Page header ── */}
         <div className="mb-12 text-center">
-          <p className="text-sm font-semibold uppercase tracking-widest text-sky-500">
+          <p className="inline-block rounded-full bg-sky-100/50 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-sky-700 mb-4 transition-all duration-700 ease-out">
             Get in Touch
           </p>
           <h1 className="mt-2 text-4xl font-bold text-slate-900 md:text-5xl">
