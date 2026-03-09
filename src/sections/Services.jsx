@@ -54,30 +54,29 @@ const ServiceCard = ({ title, description, icon: Icon, index }) => {
   return (
     <article
       ref={ref}
-      className={`group relative flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-500 ease-in-out hover:-translate-y-2 hover:shadow-xl ${
+      className={`group relative flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-500 ease-in-out hover:-translate-y-2 hover:shadow-xl hover:bg-sky-900 hover:border-sky-900 items-center justify-center text-center ${
         isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
       }`}
       style={{ transitionDelay: `${100 + index * 80}ms` }}
     >
-      {/* Subtle Gradient Hover Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-sky-50 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
-      {/* Content Wrapper (keeps content above gradient) */}
-      <div className="relative z-10 flex h-full flex-col">
+      {/* Content Wrapper */}
+      <div className="relative z-10 flex h-full flex-col items-center justify-center w-full">
         {/* Icon */}
-        <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-sky-50 text-sky-700 transition-all duration-300 group-hover:bg-sky-600 group-hover:text-white">
-          <Icon className="h-6 w-6 transition-transform duration-300 group-hover:scale-110" />
+        <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-xl bg-sky-50 text-sky-700 transition-all duration-300 group-hover:bg-sky-800 group-hover:text-white group-hover:scale-125">
+          <Icon className="h-8 w-8 transition-transform duration-300 group-hover:scale-110" />
         </div>
 
         {/* Title */}
-        <h3 className="text-base font-semibold text-slate-900 transition-colors duration-300 group-hover:text-sky-700">
+        <h3 className="text-lg font-semibold text-slate-900 transition-colors duration-300 group-hover:text-white">
           {title}
         </h3>
 
-        {/* Description */}
-        <p className="mt-3 text-sm text-slate-600 transition-colors duration-300 group-hover:text-slate-700">
-          {description}
-        </p>
+        {/* Description (Hidden by default, revealed on hover) */}
+        <div className="grid grid-rows-[0fr] opacity-0 transition-all duration-500 group-hover:grid-rows-[1fr] group-hover:opacity-100 group-hover:mt-4">
+          <p className="overflow-hidden text-sm text-slate-200">
+            {description}
+          </p>
+        </div>
       </div>
     </article>
   )

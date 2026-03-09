@@ -165,13 +165,13 @@ const Testimonials = () => {
                       style={{ aspectRatio: '1/1', objectFit: 'cover' }}
                     />
                     <Stars />
-                    <h3 className="h5 text-primary mb-4 header-Text">
+                    <h3 className="h5 text-primary header-Text">
                       {item.name}
                     </h3>
+                    <p className="text-black-50 mb-4">{item.role}</p>
                     <blockquote>
                       <p>{item.quote}</p>
                     </blockquote>
-                    <p className="text-black-50">{item.role}</p>
                   </div>
                 </div>
               ))}

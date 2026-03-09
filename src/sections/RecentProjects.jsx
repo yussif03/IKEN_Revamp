@@ -78,25 +78,23 @@ const RecentProjects = () => {
   return (
     <SectionWrapper id="projects" className="bg-slate-50 py-16">
       <div className="space-y-16" ref={ref}>
-        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end mx-auto font-sans">
-          <div className="max-w-2xl">
-            <p 
-              className={`inline-block rounded-full bg-sky-100/50 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-sky-700 mb-4 transition-all duration-700 ease-out ${
-                isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
-            >
-              Recent Projects
-            </p>
-            <h2 
-              className={`mt-3 text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl ${
-                isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`}
-            >
-              Modern platforms and products delivered by IKEN
-            </h2>
-          </div>
+        <div className="max-w-2xl font-sans">
           <p 
-            className={`text-sm text-slate-600 md:text-base ${
+            className={`inline-block rounded-full bg-sky-100/50 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-sky-700 mb-4 transition-all duration-700 ease-out ${
+              isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+          >
+            Recent Projects
+          </p>
+          <h2 
+            className={`mt-3 text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl ${
+              isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}
+          >
+            Modern platforms and products delivered by IKEN
+          </h2>
+          <p 
+            className={`mt-4 text-sm text-slate-600 md:text-base transition-all duration-700 ease-out ${
               isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
