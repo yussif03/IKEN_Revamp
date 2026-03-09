@@ -63,7 +63,7 @@ const TrustedClients = () => {
     }, [])
 
     return (
-        <section className="trusted-clients" ref={sectionRef}>
+        <section id="trustedclients" className="trusted-clients" ref={sectionRef}>
             <div className="container">
                 <div className="section-header">
                     <span className="line"></span>
