@@ -27,11 +27,12 @@ function App() {
                 <Hero />
                 <Services />
                 <Statistics />
-                <Testimonials />
                 <About />
+                <TrustedClients />
+                <Testimonials />
+                <RecentProjects />
                 <Industries />
                 <WorkProcess />
-                <RecentProjects />
               </>
             }
           />
@@ -39,7 +40,6 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
-      <TrustedClients />
       <Footer />
       <ScrollToTop />
     </div>
