@@ -52,14 +52,14 @@ const ContactUs = () => {
   }
 
   return (
-    <div className="bg-white py-16 md:py-24">
+    <div className="bg-white py-4 md:py-8">
       <div className="container">
         {/* ── Page header ── */}
-        <div className="mb-12 text-center">
+        <div className="mb-10 text-center">
           <p className="inline-block rounded-full bg-sky-100/50 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-sky-700 mb-4 transition-all duration-700 ease-out">
             Get in Touch
           </p>
-          <h1 className="mt-2 text-4xl font-bold text-slate-900 md:text-5xl">
+          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
             Talk to Our Team
           </h1>
           <p className="mx-auto mt-4 max-w-lg text-slate-500">

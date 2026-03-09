@@ -1,15 +1,16 @@
 import SectionWrapper from '../components/SectionWrapper'
 import { useIntersectionObserver } from '../hooks/useIntersectionObserver'
 import { useCountUp } from '../hooks/useCountUp'
+import { Briefcase, Award, Globe, Users } from 'lucide-react'
 
 const stats = [
-  { label: 'Successful Projects', value: 20, suffix: '+' },
-  { label: 'Years of Experience', value: 10, suffix: '+' },
-  { label: 'Countries Served', value: 6, suffix: '+' },
-  { label: 'Happy Clients', value: 50, suffix: '+' },
+  { label: 'Successful Projects', value: 20, suffix: '+', icon: Briefcase },
+  { label: 'Years of Experience', value: 10, suffix: '+', icon: Award },
+  { label: 'Countries Served', value: 6, suffix: '+', icon: Globe },
+  { label: 'Happy Clients', value: 50, suffix: '+', icon: Users },
 ]
 
-const StatItem = ({ label, value, suffix, index, start }) => {
+const StatItem = ({ label, value, suffix, index, start, icon: Icon }) => {
   const animated = useCountUp(value, {
     duration: 3000,
     start,
@@ -17,11 +18,14 @@ const StatItem = ({ label, value, suffix, index, start }) => {
 
   return (
     <div
-      className="rounded-2xl border border-slate-100 bg-white/80 px-6 py-6 shadow-sm transition-all duration-600 ease-in-out md:px-8 md:py-8 text-center"
+      className="group rounded-2xl border border-slate-100 bg-white/80 px-6 py-6 shadow-sm transition-all duration-500 ease-in-out hover:-translate-y-1 hover:shadow-md md:px-8 md:py-8 text-center flex flex-col items-center"
       style={{
         transitionDelay: `${100 + index * 120}ms`,
       }}
     >
+      <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-sky-50 text-sky-600 transition-colors duration-300 group-hover:bg-sky-500 group-hover:text-white">
+        <Icon className="h-7 w-7 transition-transform duration-300 group-hover:scale-110" />
+      </div>
       {/* <p className="text-3xl font-semibold tracking-tight text-slate-900 md:text-4xl"> */}
       <p className="text-4xl md:text-4xl font-bold tracking-tight text-sky-700">
         {animated}
