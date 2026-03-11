@@ -1,14 +1,15 @@
+import { useRef, useEffect, useState } from 'react'
 import SectionWrapper from '../components/SectionWrapper'
-import { useIntersectionObserver } from '../hooks/useIntersectionObserver'
-import { ArrowRight } from 'lucide-react'
+import { motion, useAnimationControls } from 'framer-motion'
 import contactCarsImg from '../assets/p-contactcars.jpg'
 import furnImg from '../assets/p-furn.jpg'
 import homecareImg from '../assets/p-homecare.jpg'
+import moqawalatImg from '../assets/p-moqawalat.jpg'
 
 const projects = [
   {
     title: 'Contact Cars Platform',
-    category: 'Web Application',
+    category: 'Mobile Application',
     image: contactCarsImg,
   },
   {
@@ -21,97 +22,140 @@ const projects = [
     category: 'Mobile Application',
     image: homecareImg,
   },
+  {
+    title: 'Moqawalat Platform',
+    category: 'Web Application',
+    image: moqawalatImg,
+  }
 ]
 
-const ProjectCard = ({ title, category, image, index }) => {
-  const { ref, isInView } = useIntersectionObserver()
+// Duplicate projects for infinite loop
+const infiniteProjects = [...projects, ...projects]
 
+const cardVariants = {
+  hidden: { opacity: 0, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.5,
+    },
+  },
+}
+
+const ProjectCard = ({ title, category, image }) => {
   return (
-    <article
-      ref={ref}
-      className={`group relative flex flex-col overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-2xl hover:shadow-sky-100 hover:border-sky-200 cursor-pointer ${
-        isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-      }`}
-      style={{ transitionDelay: `${200 + index * 150}ms` }}
+    <motion.article
+      variants={cardVariants}
+      whileHover={{ y: -5, scale: 1.01 }}
+      className="group relative flex flex-col flex-shrink-0 w-[300px] md:w-[400px] overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-500 ease-out hover:shadow-xl hover:border-sky-200 cursor-pointer"
     >
-      <div className="relative h-52 overflow-hidden rounded-t-3xl">
+      <div className="relative h-48 md:h-56 overflow-hidden rounded-t-3xl">
         <img
           src={image}
           alt={title}
           loading="lazy"
           className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
         />
-        {/* Subtle overlay that appears on hover to make image slightly darker, giving text more pop if needed, but mainly for depth */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
       </div>
-      
-      <div className="relative z-10 flex flex-col justify-between flex-grow p-5 md:p-6 bg-white transition-colors duration-500 group-hover:bg-sky-50/10">
+
+      <div className="relative z-10 flex flex-col justify-between flex-grow p-6 bg-white transition-colors duration-500 group-hover:bg-sky-50/10">
         <div>
           <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-sky-600 mb-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-sky-500 transition-transform duration-500 group-hover:scale-150"></span>
+            <span className="h-1.5 w-1.5 rounded-full bg-sky-500"></span>
             {category}
           </p>
-          <h3 className="text-lg font-bold text-slate-900 transition-colors duration-300 group-hover:text-sky-800">
+          <h3 className="text-lg font-bold text-slate-900 group-hover:text-sky-800">
             {title}
           </h3>
         </div>
-        
-        <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-4">
-          <span className="text-[13px] font-medium text-slate-500 transition-colors duration-300 group-hover:text-slate-700">
-            Discovery · Design · Delivery
-          </span>
-          {/* <div className="flex h-8 w-8 items-center justify-center rounded-full bg-sky-50 text-sky-600 opacity-0 transition-all duration-500 group-hover:opacity-100 group-hover:bg-sky-500 group-hover:text-white -translate-x-3 group-hover:translate-x-0 shadow-sm">
-            <ArrowRight size={16} strokeWidth={2.5} />
-          </div> */}
-        </div>
       </div>
-      
-      {/* Interactive Bottom Line */}
-      <div className="absolute bottom-0 left-0 h-1.5 w-0 bg-sky-500 transition-all duration-500 ease-out group-hover:w-full" />
-    </article>
+      <div className="absolute bottom-0 left-0 h-1 w-0 bg-sky-500 transition-all duration-500 ease-out group-hover:w-full" />
+    </motion.article>
   )
 }
 
 const RecentProjects = () => {
-  const { ref, isInView } = useIntersectionObserver()
+  const [isPaused, setIsPaused] = useState(false)
+  const controls = useAnimationControls()
+  const containerRef = useRef(null)
+
+  // Start the infinite animation
+  useEffect(() => {
+    const startAnimation = async () => {
+      await controls.start({
+        x: '-50%',
+        transition: {
+          duration: 30,
+          ease: 'linear',
+          repeat: Infinity,
+        },
+      })
+    }
+    startAnimation()
+  }, [controls])
+
+  // Handle Pause/Resume
+  const handleMouseEnter = () => controls.stop()
+  const handleMouseLeave = () => {
+    controls.start({
+      x: '-50%',
+      transition: {
+        duration: 30,
+        ease: 'linear',
+        repeat: Infinity,
+      },
+    })
+  }
 
   return (
-    <SectionWrapper id="projects" className="bg-slate-50 py-16">
-      <div className="space-y-16" ref={ref}>
-        <div className="max-w-2xl font-sans">
-          <p 
-            className={`inline-block rounded-full bg-sky-100/50 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-sky-700 mb-4 transition-all duration-700 ease-out ${
-              isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-          >
-            Recent Projects
+    <SectionWrapper id="projects" className="bg-slate-50 py-20 overflow-hidden">
+      <div className="space-y-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="max-w-4xl mx-auto text-center px-4"
+        >
+          <p className="inline-block rounded-full bg-sky-100 px-4 py-1 text-xs font-bold uppercase tracking-widest text-sky-700 mb-4">
+            Our Portfolio
           </p>
-          <h2 
-            className={`mt-3 text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl ${
-              isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
-          >
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight text-slate-900 md:text-3xl">
             Modern platforms and products delivered by IKEN
           </h2>
-          <p 
-            className={`mt-4 text-sm text-slate-600 md:text-base transition-all duration-700 ease-out ${
-              isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}
+        </motion.div>
+
+        <div
+          className="relative flex overflow-hidden mask-fade cursor-pointer"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <motion.div
+            ref={containerRef}
+            animate={controls}
+            className="flex gap-8 px-4"
+            style={{ width: 'max-content' }}
           >
-            Each engagement is tailored to our clients' teams, processes, and business models,
-            with a focus on sustainable delivery.
-          </p>
-        </div>
-        
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, index) => (
-            <ProjectCard key={project.title} index={index} {...project} />
-          ))}
+            {infiniteProjects.map((project, index) => (
+              <ProjectCard
+                key={`${project.title}-${index}`}
+                {...project}
+              />
+            ))}
+          </motion.div>
         </div>
       </div>
+
+      <style >{`
+        .mask-fade {
+          mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+          -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+      `}</style>
     </SectionWrapper>
   )
 }
 
 export default RecentProjects
-

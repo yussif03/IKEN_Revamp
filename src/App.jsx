@@ -9,6 +9,7 @@ import Testimonials from './sections/Testimonials'
 import About from './sections/About'
 import Industries from './sections/Industries'
 import WorkProcess from './sections/WorkProcess'
+import BeforeAfter from './sections/BeforeAfter'
 import RecentProjects from './sections/RecentProjects'
 import TrustedClients from './sections/TrustedClients'
 import ContactUs from './pages/ContactUs'
@@ -32,6 +33,7 @@ function App() {
                 <Testimonials />
                 <RecentProjects />
                 <Industries />
+                <BeforeAfter />
                 <WorkProcess />
               </>
             }

@@ -179,9 +179,6 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          <a href="/#statistics" className="hover:text-sky-900">
-            Statistics
-          </a>
           <a href="/#trustedclients" className="hover:text-sky-900">
             Clients & Partners
           </a>
@@ -245,11 +242,28 @@ const Navbar = () => {
         className={[
           'md:hidden border-t border-slate-100 bg-white/95 backdrop-blur',
           'overflow-hidden transition-[max-height,opacity] duration-200 ease-out',
-          isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 pointer-events-none',
+          isMobileMenuOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0 pointer-events-none',
         ].join(' ')}
       >
         <div className="container py-3">
           <nav className="flex flex-col gap-1 text-sm font-medium text-slate-700">
+            <Link
+              to="/"
+              onClick={(e) => {
+                handleMobileNavItemClick()
+                handleLogoClick(e)
+              }}
+              className="rounded-lg px-3 py-2 transition-colors hover:bg-slate-100 hover:text-sky-900"
+            >
+              Home
+            </Link>
+            <a
+              href="/#about"
+              onClick={handleMobileNavItemClick}
+              className="rounded-lg px-3 py-2 transition-colors hover:bg-slate-100 hover:text-sky-900"
+            >
+              About
+            </a>
             <a
               href="/#services"
               onClick={handleMobileNavItemClick}
@@ -258,18 +272,11 @@ const Navbar = () => {
               Services
             </a>
             <a
-              href="/#statistics"
+              href="/#industries"
               onClick={handleMobileNavItemClick}
               className="rounded-lg px-3 py-2 transition-colors hover:bg-slate-100 hover:text-sky-900"
             >
-              Statistics
-            </a>
-            <a
-              href="/#testimonials"
-              onClick={handleMobileNavItemClick}
-              className="rounded-lg px-3 py-2 transition-colors hover:bg-slate-100 hover:text-sky-900"
-            >
-              Customer Says
+              Industries
             </a>
             <a
               href="/#projects"
@@ -279,11 +286,11 @@ const Navbar = () => {
               Projects
             </a>
             <a
-              href="/#about"
+              href="/#trustedclients"
               onClick={handleMobileNavItemClick}
               className="rounded-lg px-3 py-2 transition-colors hover:bg-slate-100 hover:text-sky-900"
             >
-              About
+              Clients & Partners
             </a>
           </nav>
 
